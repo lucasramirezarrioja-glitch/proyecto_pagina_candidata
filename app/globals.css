@@ -1,0 +1,180 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 42 33% 98%;
+    --foreground: 155 20% 12%;
+
+    --card: 42 33% 99%;
+    --card-foreground: 155 20% 12%;
+
+    --popover: 42 33% 99%;
+    --popover-foreground: 155 20% 12%;
+
+    --primary: 155 50% 22%;
+    --primary-foreground: 42 40% 97%;
+
+    --secondary: 155 25% 92%;
+    --secondary-foreground: 155 40% 18%;
+
+    --muted: 155 18% 94%;
+    --muted-foreground: 155 10% 38%;
+
+    --accent: 14 70% 62%;
+    --accent-foreground: 0 0% 100%;
+
+    --gold: 38 72% 45%;
+    --gold-foreground: 42 40% 97%;
+
+    --destructive: 0 55% 42%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 155 15% 85%;
+    --input: 155 15% 82%;
+    --ring: 38 72% 52%;
+
+    --radius: 10px;
+
+    --font-sans: "Inter", system-ui, sans-serif;
+    --font-display: "Playfair Display", Georgia, serif;
+  }
+
+  .dark {
+    --background: 155 30% 7%;
+    --foreground: 42 30% 94%;
+
+    --card: 155 26% 10%;
+    --card-foreground: 42 30% 94%;
+
+    --popover: 155 26% 10%;
+    --popover-foreground: 42 30% 94%;
+
+    --primary: 38 72% 62%;
+    --primary-foreground: 155 40% 10%;
+
+    --secondary: 155 22% 14%;
+    --secondary-foreground: 42 30% 94%;
+
+    --muted: 155 22% 14%;
+    --muted-foreground: 42 10% 68%;
+
+    --accent: 14 60% 58%;
+    --accent-foreground: 0 0% 100%;
+
+    --gold: 38 72% 62%;
+    --gold-foreground: 155 30% 7%;
+
+    --destructive: 0 60% 52%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 155 18% 18%;
+    --input: 155 18% 20%;
+    --ring: 38 72% 62%;
+  }
+
+  * {
+    @apply border-border;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+    ::view-transition-old(*),
+    ::view-transition-new(*) {
+      animation: none !important;
+    }
+  }
+}
+
+@layer components {
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-gold;
+  }
+
+  .container-wide {
+    @apply mx-auto w-full max-w-[1320px] px-4 sm:px-5 lg:px-8 xl:px-10;
+  }
+
+  /*
+   * Marca de agua #EsConE: diagonal repeating text overlay.
+   * Implementada con SVG inline para consistencia entre imágenes.
+   */
+  .watermark-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='320' height='160' viewBox='0 0 320 160'><g transform='rotate(-22 160 80)'><text x='50%' y='50%' text-anchor='middle' dominant-baseline='middle' font-family='Georgia, serif' font-size='28' font-weight='700' fill='%23E0A426' fill-opacity='0.28' letter-spacing='4'>%23EsConE</text></g></svg>");
+    background-repeat: repeat;
+    background-size: 220px 110px;
+    mix-blend-mode: multiply;
+  }
+
+  .watermark-overlay-strong {
+    background-size: 280px 140px;
+    mix-blend-mode: normal;
+  }
+
+  .prose-landing p {
+    @apply text-base leading-relaxed text-foreground/90 lg:text-lg;
+  }
+}
+
+@keyframes route-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes route-fade-out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+@supports (view-transition-name: none) {
+  ::view-transition-old(.route-exit) {
+    animation: route-fade-out 280ms cubic-bezier(0.4, 0, 0.2, 1) both;
+  }
+
+  ::view-transition-new(.route-enter) {
+    animation: route-fade-in 340ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  ::view-transition-group(.route-enter),
+  ::view-transition-group(.route-exit) {
+    animation-duration: 340ms;
+  }
+}
