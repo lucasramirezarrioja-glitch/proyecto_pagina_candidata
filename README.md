@@ -41,13 +41,15 @@ DESIGN.md              → Sistema de diseño (paleta, tipografía, layouts)
 
 ## Variables de entorno
 
-Copia `.env.local.example` → `.env.local` y completa los valores:
+Copia `.env.local.example` → `.env.local` y completa los valores correctos. No subas `.env.local` al repositorio; solo sirve para el entorno local.
+
+En Vercel debes agregar estas variables en `Project Settings → Environment Variables` para que el build pueda conectarse a Supabase.
 
 | Variable                             | Dónde usar | Descripción                                     |
 | ------------------------------------ | ---------- | ----------------------------------------------- |
 | `NEXT_PUBLIC_SUPABASE_URL`           | client + server | URL pública del proyecto Supabase.         |
 | `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | client + server | Publishable / anon key.                 |
-| `SUPABASE_SERVICE_ROLE_KEY`          | **solo server** | Sólo úsala si habilitas scripts admin. Nunca se expone al cliente. |
+| `SUPABASE_SERVICE_ROLE_KEY`          | **solo server** | Solo en Vercel / servidor. Nunca expongas esta clave en el repo. |
 | `NEXT_PUBLIC_SITE_URL`               | client + server | URL absoluta del sitio para metadatos SEO. |
 
 ## Primeros pasos (local)
